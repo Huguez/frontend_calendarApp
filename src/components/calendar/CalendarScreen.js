@@ -9,6 +9,7 @@ import { messages } from '../../helpers/calendar-messages'
 import { events } from '../../evets/event'
 import { Navbar } from '../ui/Navbar'
 import { CalendarEvent } from './CalendarEvent';
+import { CalendarModal } from './CalendarModal';
 
 moment.locale('es')
 
@@ -63,6 +64,7 @@ export const CalendarScreen = () => {
                     view={ lastView }
                 />
 
+                <CalendarModal />
             </div>
         </div>
     )

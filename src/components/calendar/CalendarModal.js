@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react'
+import Swal from 'sweetalert2'
+
 import Modal from 'react-modal'
 import './CalendarModal.css'
 import DateTimePicker from 'react-datetime-picker';
@@ -23,42 +25,99 @@ Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
     
-    const [modalIsOpen, setIsOpen] = useState( false );
+    const [ isOpen, setIsOpen] = useState( false );
+
+    const [formValue, setFormValue] = useState({ 
+        title: '',
+        notes: '', 
+        start: moment().minute(0).second(0).toDate(),
+        end: moment().minute(0).second(0).add( 1,'hours' ).toDate()
+    })
+    
+    const { title, notes, start, end } = formValue 
+
+    const handleInputChange = ( { target } ) => {
+        setFormValue( {
+            ...formValue, 
+            [target.name]: target.value
+        } )
+    }
 
     function openModal() {
         setIsOpen(true);
     }
 
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        // subtitle.style.color = '#f00';
-    }
 
     function closeModal() {
         setIsOpen(false);
-        // console.log("cerrando...")
     }
-
     
-    const [startDate, setStartDate] = useState( moment().minute(0).second(0).toDate() )
+    const [startDate, setStartDate] = useState( start )
     
     const handleStartDateChange = ( e ) => {
         setStartDate( e )
+        setFormValue( {
+            ...formValue, 
+            start: e
+        } )
     }
     
-    const [endDate, setEndDate] = useState( moment().minute(0).second(0).add( 1,'hours' ).toDate() )
+    const [endDate, setEndDate] = useState( end )
     
     const handleEndDateChange = ( e ) => {
         setEndDate( e )
+        setFormValue( {
+            ...formValue, 
+            end: e
+        } )
     }
+
+    const handleSubmit = ( e ) => {
+        e.preventDefault();
+        
+        const momentStart = moment( start )
+        const momentEnd = moment( end )
+        
+        if( momentStart.isSameOrAfter( momentEnd ) ){
+            Swal.fire( {
+                title: 'Error!',
+                text: 'La Fecha Final Tiene Que Ser Superior',
+                icon: 'error',
+            } );
+            return;
+        }
+        
+        if( !title ){
+            
+            Swal.fire( {
+                title: 'Error!',
+                text: 'Falta El Titulo',
+                icon: 'error',
+            } );
+            return;
+        }
+
+        if( !notes ){
+            console.log("falta las notas")
+            Swal.fire( {
+                title: 'Error!',
+                text: 'Falta Las Notas',
+                icon: 'error',
+            } );
+            return;
+        }
+
+        closeModal()
+    }
+
 
     return (
         <div>
             <button onClick={openModal}>Open Modal</button>
 
             <Modal 
-                isOpen={ true }
-                onAfterOpen={afterOpenModal}
+                isOpen={ isOpen }
+                
                 onRequestClose={closeModal}
                 style={customStyles}
                 closeTimeoutMS={ 200 }
@@ -67,7 +126,7 @@ export const CalendarModal = () => {
             >
                 <h1> Nuevo evento </h1>
                 <hr />
-                <form className="container">
+                <form className="container" onSubmit={ handleSubmit } >
                     <div className="form-group">
                         <label>Fecha y hora inicio</label>
                         {/* <input className="form-control" placeholder="Fecha inicio" /> */}
@@ -92,7 +151,9 @@ export const CalendarModal = () => {
                             className="form-control"
                             placeholder="Título del evento"
                             name="title"
+                            value={ title }
                             autoComplete="off"
+                            onChange={ handleInputChange }
                         />
                         <small id="emailHelp" className="form-text text-muted">Una descripción corta</small>
                     </div>
@@ -103,7 +164,9 @@ export const CalendarModal = () => {
                             className="form-control"
                             placeholder="Notas"
                             rows="5"
+                            value={ notes }
                             name="notes"
+                            onChange={ handleInputChange }
                         ></textarea>
                         <small id="emailHelp" className="form-text text-muted">Información adicional</small>
                     </div>

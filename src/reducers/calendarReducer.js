@@ -1,16 +1,8 @@
 import { types } from "../types/types"
+import { events as e } from '../evets/event'
 
 const initialState = {
-    events: [ {
-        id: 5,
-        title: 'Conference',
-        start: new Date(2021, 6, 11),
-        end: new Date(2021, 6, 13),
-        desc: 'Big conference for important people',
-        user: {
-          name : "Huguez"
-        }
-      } ],
+    events: [ ...e ],
     activeEvent: null
 }
 
@@ -22,9 +14,12 @@ export const calendarReducer = ( state = initialState, action ) => {
                 activeEvent: action.payload
             }
         case types.eventAddNew:
+            const arreglo = [ ...state.events ]
+            arreglo.push( action.payload )
+
             return {
                 ...state,
-                events: [ ...state.events.push( action.payload )]
+                events: [ ...arreglo ]
             }
         default: 
             return state

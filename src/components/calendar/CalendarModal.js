@@ -9,6 +9,7 @@ import './CalendarModal.css'
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import { uiCloseModal } from '../../actions/ui'
+import { eventAddNew } from '../../actions/events'
 
 
 const customStyles = {
@@ -25,18 +26,20 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement('#root');
 
+const initEvent = { 
+    title: '',
+    notes: '', 
+    start: moment().minute(0).second(0).toDate(),
+    end:   moment().minute(0).second(0).add( 1,'hours' ).toDate()
+}
+
 
 export const CalendarModal = ( ) => {
     
     const dispatch = useDispatch()
     const { modalOpen } = useSelector( state => state.ui )
     
-    const [formValue, setFormValue] = useState({ 
-        title: '',
-        notes: '', 
-        start: moment().minute(0).second(0).toDate(),
-        end: moment().minute(0).second(0).add( 1,'hours' ).toDate()
-    })
+    const [formValue, setFormValue] = useState( initEvent )
     
     const { title, notes, start, end } = formValue 
 
@@ -48,8 +51,10 @@ export const CalendarModal = ( ) => {
     }
 
     function closeModal() {
-        // setIsOpen(false);
+        setFormValue( initEvent )
         dispatch( uiCloseModal() )
+        setStartDate( moment().minute(0).second(0).toDate() )
+        setEndDate( moment().minute(0).second(0).add( 1,'hours' ).toDate() )
     }
     
     const [startDate, setStartDate] = useState( start )
@@ -107,8 +112,8 @@ export const CalendarModal = ( ) => {
             return;
         }
 
+        dispatch( eventAddNew( { id:new Date().getTime(), ...formValue, user:{ _id: '1234', name: 'Huguez' } } ) )
         closeModal()
-        dispatch( uiCloseModal() )
     }
 
 

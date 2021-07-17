@@ -6,21 +6,21 @@ export const Navbar = () => {
         <div>
             <nav className="navbar navbar-dark   bg-dark" >
                 <div className="container-fluid">
-                    
-                <NavLink to='/' className="navbar-brand"> Home </NavLink>
+                        
+                    <NavLink to='/' className="navbar-brand"> Home </NavLink>
 
-                <NavLink to='/' className="navbar-brand"> Home </NavLink>
+                    <NavLink to='/' className="navbar-brand"> Home </NavLink>
 
-                <NavLink to='/' className="navbar-brand"> Home </NavLink>
+                    <NavLink to='/' className="navbar-brand"> Home </NavLink>
 
-                <NavLink to='/' className="navbar-brand"> Home </NavLink>
-                    
-                <button className="btn btn-outline-danger" >
-                    <span> Logout </span>
-                </button>
+                    <NavLink to='/' className="navbar-brand"> Home </NavLink>
+                        
+                    <button className="btn btn-outline-danger" >
+                        <span> Logout </span>
+                    </button>
 
                 </div>
-            </nav>    
+            </nav>
         </div>
     )
 }

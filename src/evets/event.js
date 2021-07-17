@@ -14,7 +14,7 @@ export const events =  [
     }
   },
   {
-    id: 11.3,
+    id: 113,
     title: 'Quote Follow-up - Tea by Tina',
     start: new Date(2021, 6, 13, 15, 30, 0),
     end: new Date(2021, 6, 13, 16, 0, 0),

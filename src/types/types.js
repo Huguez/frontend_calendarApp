@@ -9,6 +9,6 @@ export const types = {
     eventRemove:           '[event] remove event',
     eventClearActiveEvent: '[event] clear active event',
     eventUpdate:           '[event] Event Update ',
-    
+    eventDeleteEvent:      '[event]  Delete Event',
 
 }

@@ -19,7 +19,6 @@ export const LoginScreen = () => {
     const handleLoginSubmit = ( e ) => {
         e.preventDefault();
 
-        // handleLoginInputChange(  )
         dispatch( startLogin( loginEmail, loginPassword ) )
     }
 

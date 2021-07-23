@@ -3,23 +3,41 @@ import './Login.css';
 import { useDispatch } from 'react-redux'
 import { useForm } from '../../hooks/useForm'
 
-import { startLogin } from '../../actions/auth';
+import { startLogin, startRegister } from '../../actions/auth';
+import Swal from 'sweetalert2';
 
 export const LoginScreen = () => {
 
     const dispatch = useDispatch()
 
     const [ formLoginValues, handleLoginInputChange,  ] = useForm( {
-        loginEmail: 'wawa@wawa.com', 
-        loginPassword: '1234567',
-    } )
-
+        loginEmail: '', 
+        loginPassword: '',
+    } );
     const { loginEmail, loginPassword } = formLoginValues
+
+    const [ formRegisterValues, handleRegisterInputChange,  ] = useForm( {
+        registerName: 'algo', 
+        registerEmail: 'algo@algo.com', 
+        registerPassword: '1234567',
+        registerRepPassword: '1234567',
+    } );
+    const { registerName, registerEmail, registerPassword, registerRepPassword } = formRegisterValues
 
     const handleLoginSubmit = ( e ) => {
         e.preventDefault();
 
         dispatch( startLogin( loginEmail, loginPassword ) )
+    }
+
+    const handleRegisterSubmit = ( e ) => {
+        e.preventDefault();
+
+        if( registerPassword !== registerRepPassword ){
+            return Swal.fire( 'error', 'Los password deben de ser iguales', 'warning' )
+        }
+
+        dispatch( startRegister( registerEmail, registerName, registerPassword ) )        
     }
 
     return (
@@ -31,17 +49,18 @@ export const LoginScreen = () => {
                         <div className="form-group">
                             <input 
                                 value={ loginEmail }
-                                name="email"
-                                type="email"
+                                onChange={ handleLoginInputChange }
+                                autoComplete="off"
+                                name="loginEmail"
+                                type="text"
                                 className="form-control  m-1"
                                 placeholder="Correo"
-                                onChange={ handleLoginInputChange }
                             />
                         </div>
                         <div className="form-group">
                             <input
                                 value={ loginPassword }
-                                name="password"
+                                name="loginPassword"
                                 onChange={ handleLoginInputChange }
                                 type="password"
                                 className="form-control  m-1"
@@ -61,17 +80,25 @@ export const LoginScreen = () => {
                 <div className="col-md-6 login-form-2 mt-5">
 
                     <h3>Registro</h3>
-                    <form>
+                    <form onSubmit={ handleRegisterSubmit } >
                         <div className="form-group">
                             <input
                                 type="text"
+                                value={ registerName }
+                                name="registerName"
+                                onChange={ handleRegisterInputChange }
+                                autoComplete="off"
                                 className="form-control m-1"
                                 placeholder="Nombre"
                             />
                         </div>
                         <div className="form-group">
                             <input
-                                type="email"
+                                type="text"
+                                value={ registerEmail }
+                                name="registerEmail"
+                                onChange={ handleRegisterInputChange }
+                                autoComplete="off"
                                 className="form-control  m-1"
                                 placeholder="Correo"
                             />
@@ -79,6 +106,10 @@ export const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="password"
+                                value={ registerPassword }
+                                name="registerPassword"
+                                onChange={ handleRegisterInputChange }
+                                autoComplete="off"
                                 className="form-control  m-1"
                                 placeholder="Contraseña" 
                             />
@@ -87,6 +118,10 @@ export const LoginScreen = () => {
                         <div className="form-group">
                             <input
                                 type="password"
+                                value={ registerRepPassword }
+                                name="registerRepPassword"
+                                onChange={ handleRegisterInputChange }
+                                autoComplete="off"
                                 className="form-control  m-1"
                                 placeholder="Repita la contraseña" 
                             />

@@ -11,11 +11,11 @@ export const useForm = ( initialState = {} ) => {
 
     const handleInpuntChange = ( {target} ) => {
         
-
         setFormvalues({ 
             ...formvalues,
             [target.name]: target.value 
         });
+
     }
 
     return [ formvalues, handleInpuntChange, reset ];

@@ -11,7 +11,7 @@ const initialState = {
 export const authReducer = ( state = initialState, action ) => {
     switch( action.type ){
         case types.authLogin:
-
+            console.log( "entro" )
             return state;
 
         default: return state

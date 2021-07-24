@@ -23,7 +23,7 @@ export const CalendarScreen = () => {
     const dispatch = useDispatch()
     const { calendar:{events, activeEvent },  } = useSelector( state => state )
 
-    const [lastView, setLastView] = useState( localStorage.getItem( 'lastView' ) || 'mouth' )
+    const [ lastView, setLastView ] = useState( 'month' )
 
     const onDoubleClick = ( e ) =>{
         
@@ -58,7 +58,7 @@ export const CalendarScreen = () => {
 
         return { style };
     }
-
+    
     return (
         <div>
             <Navbar />
@@ -73,11 +73,11 @@ export const CalendarScreen = () => {
                     onSelectEvent={ onSelect }
                     onSelectSlot={ onSelectSlot }
                     selectable={ true }
-                    onView={ onViewChange }
                     onDoubleClickEvent={ onDoubleClick }
                     eventPropGetter={ eventStyleGetter }
                     components={{ event: CalendarEvent }}
-                    view={ lastView }
+                    onView={ onViewChange }
+                    defaultView={ lastView }
                 />
                 
                 <CalendarModal  />

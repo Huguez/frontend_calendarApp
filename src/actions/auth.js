@@ -2,6 +2,9 @@ import { types } from "../types/types"
 import { fetchSinToken, fetchToken } from '../helpers/fetch'
 import Swal from "sweetalert2";
 
+
+// ASYNCronas ////////////////////////////////////
+
 export const startLogin = ( email, password ) => {
     return async ( dispatch ) => {
         
@@ -56,9 +59,23 @@ export const startChecking = () => {
         }else{
             dispatch( checkingFinish() )
         }
-
     }
 }
+
+export const startLogout = () => {
+    return async ( dispatch ) => {
+        localStorage.clear();
+        dispatch( logout() )
+    }
+}
+
+
+
+/// Syncronas  ////////////////////////////////////
+
+const logout = () =>({
+    type: types.authLogout
+})
 
 const checkingFinish = () => ({
     type: types.authCheckingFinish
@@ -73,4 +90,3 @@ const login = ( {  _id, name } ) => ({
     type: types.authLogin,
     payload: {  _id, name }
 })
-

@@ -9,7 +9,7 @@ import './CalendarModal.css'
 import DateTimePicker from 'react-datetime-picker';
 import moment from 'moment';
 import { uiCloseModal } from '../../actions/ui'
-import { startNewEvent, eventClearActiveEvent, eventUpdate } from '../../actions/events'
+import { startNewEvent, eventClearActiveEvent, startEventUpdate } from '../../actions/events'
 
 
 const customStyles = {
@@ -125,7 +125,7 @@ export const CalendarModal = ( ) => {
         if( !activeEvent ){
             dispatch( startNewEvent( { ...formValue } ) )
         }else{
-            dispatch( eventUpdate( formValue ) )
+            dispatch( startEventUpdate( formValue ) )
         }
         
         closeModal()

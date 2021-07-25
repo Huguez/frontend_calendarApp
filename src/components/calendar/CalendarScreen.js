@@ -21,7 +21,7 @@ moment.locale('es')
 export const CalendarScreen = () => {
     
     const dispatch = useDispatch()
-    const { calendar:{events, activeEvent },  } = useSelector( state => state )
+    const { calendar:{events, activeEvent }, auth:{ _id,  } } = useSelector( state => state )
 
     const [ lastView, setLastView ] = useState( 'month' )
 
@@ -49,9 +49,9 @@ export const CalendarScreen = () => {
     const localizer = momentLocalizer( moment );
 
     const eventStyleGetter = ( e, start, end, isSelected ) => {
-        
+    
         const style = {
-            backgroundColor: '#367cf7',
+            backgroundColor: ( _id === e.user._id ) ?  '#367cf7' : 'red',
             borderRadius: '0px',
             opacity: 0.8,
             color: 'black',

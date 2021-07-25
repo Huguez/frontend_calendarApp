@@ -1,8 +1,8 @@
 import { types } from "../types/types"
-import { events as e } from '../evets/event'
+// import { events as e } from '../evets/event'
 
 const initialState = {
-    events: [ ...e ],
+    events: [],
     activeEvent: null
 }
 
@@ -36,6 +36,11 @@ export const calendarReducer = ( state = initialState, action ) => {
                 ...state,
                 events: state.events.filter( e => e.id !== state.activeEvent.id ),
                 activeEvent : null
+            }
+        case types.eventLoaded:
+            return {
+                ...state,
+                events: [ ... action.payload ]
             }
         default: 
             return state

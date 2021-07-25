@@ -11,21 +11,45 @@ export const startNewEvent = ( event ) =>{
             
             if( body.ok ){
                 
-                const aux = getState( state => state ).auth
+                const { _id, name } = getState( state => state ).auth
                 
                 event.id = body.evento.id
-                event.user = { _id: aux._id, name: aux.name }
+                event.user = { _id, name }
 
                 dispatch( eventAddNew( event ) )
             }
         }catch( error ){
-
             console.log( "StartNewEvent: ", error )
         }
     }
 }
 
+export const startEventLoaded = () => {
+    return async ( dispatch ) => {
+        try{
+            const resp = await fetchToken( 'event/getEvents' )
+            const body = await resp.json();
+            
+            if( body.ok ){
+
+                const events = body.eventos
+                console.log( body.eventos )
+
+                dispatch( eventLoaded( events ) )
+            }
+        }catch( error ){
+            console.log( error )
+        }
+    }
+}
+
+
 /// syncrons //////////////////////
+
+const eventLoaded = ( events ) => ({
+    type: types.eventLoaded,
+    payload: events
+})
 
 const eventAddNew = ( event ) => ({
     type: types.eventAddNew,

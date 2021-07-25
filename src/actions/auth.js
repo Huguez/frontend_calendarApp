@@ -1,6 +1,8 @@
+import Swal from "sweetalert2";
+import { eventClearActiveEvent } from '../actions/events'
 import { types } from "../types/types"
 import { fetchSinToken, fetchToken } from '../helpers/fetch'
-import Swal from "sweetalert2";
+
 
 
 // ASYNCronas ////////////////////////////////////
@@ -65,6 +67,8 @@ export const startChecking = () => {
 export const startLogout = () => {
     return async ( dispatch ) => {
         localStorage.clear();
+
+        dispatch( eventClearActiveEvent() )
         dispatch( logout() )
     }
 }

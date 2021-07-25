@@ -1,5 +1,4 @@
 import { types } from "../types/types"
-// import { events as e } from '../evets/event'
 
 const initialState = {
     events: [],
